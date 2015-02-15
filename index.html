@@ -36,14 +36,271 @@
 </head>
 
 <body id="page-top" class="index">
-    <script>
+<script>
     Parse.initialize("QRYcIOAWQZ1BsiVZaE6sme4ypBR9UUmcZE6dK0Nd", "0FKDgsLn9JL0UgWlKeDkY84b5hem7SoBUm3luXWd");
-        var TestObject = Parse.Object.extend("TestObject");
+    function createCustomer ()
+    {
+        var customerFirstName = document.getElementById('customerFirstName').value;
+        var customerLastName = document.getElementById('customerLastName').value;
+        var customerEmail = document.getElementById('customerEmail').value;
+        var customerBirthday = document.getElementById('customerBirthday').value;
+        var customerNumber = document.getElementById('customerNumber').value;
+        var customerAddress = document.getElementById('customerAddress').value;
+
+        if (customerFirstName == "" )
+        {
+            var customerFirstNameError = document.getElementById('customerFirstNameError');
+            customerFirstNameError.className = customerFirstNameError.className.replace(" hidden", "");
+            return;
+        }
+
+        if (customerLastName == "" )
+        {
+            var customerLastNameError = document.getElementById('customerLastNameError');
+            customerLastNameError.className = customerLastNameError.className.replace(" hidden", "");
+            return;
+        }
+
+        if (customerEmail == "" )
+        {
+            var customerEmailError = document.getElementById('customerEmailError');
+            customerEmailError.className = customerEmailError.className.replace(" hidden", "");
+            return;
+        }
+
+        if (customerBirthday == "" )
+        {
+            var customerBirthdayError = document.getElementById('customerBirthdayError');
+            customerBirthdayError.className = customerBirthdayError.className.replace(" hidden", "");
+            return;
+        }
+
+        if (customerNumber == "" )
+        {
+            var customerNumberError = document.getElementById('customerNumberError');
+            customerNumberError.className = customerNumberError.className.replace(" hidden", "");
+            return;
+        }
+
+        if (customerAddress == "" )
+        {
+            var customerAddressError = document.getElementById('customerAddressError');
+            customerAddressError.className = customerAddressError.className.replace(" hidden", "");
+            return;
+        }
+
+        var TestObject = Parse.Object.extend("Customer");
         var testObject = new TestObject();
-        testObject.save({foo: "bar"}).then(function(object) {
-        //alert("yay! it worked");
+         testObject.save({CustomerFirstName: customerFirstName, CustomerLastName: customerLastName, CustomerEmail: customerEmail, customerBirthday: customerBirthday, customerNumber: customerNumber, customerAddress: customerAddress}).then(function(object) {
+            alert("customerFirstName: " + customerFirstName + "\ncustomerLastName: " + customerLastName + "\ncustomerEmail: " + customerEmail + "\ncustomerBirthday: " + customerBirthday + "\ncustomerNumber " + customerNumber + "\ncustomerAddress " + customerAddress);
         });
-    </script>
+    }
+
+    function customerFirstNameTextBox_onChange ()
+    {
+        var customerFirstName = document.getElementById('customerFirstName').value;
+
+        if (customerFirstName.length > 3)
+        {
+            var customerFirstNameError = document.getElementById('customerFirstNameError');
+            customerFirstNameError.className = customerFirstNameError.className + " hidden";
+        }
+    }
+
+    function customerLastNameTextBox_onChange ()
+    {
+        var customerLastName = document.getElementById('customerLastName').value;
+
+        if (customerLastName.length > 3)
+
+        {
+            var customerLastNameError = document.getElementById('customerLastNameError');
+            customerLastNameError.className = customerLastNameError.className + " hidden";
+        }
+
+
+    }
+
+    function customerEmailTextBox_onChange ()
+    {
+        var customerEmail = document.getElementById('customerEmail').value;
+
+        if (customerEmail.length > 3)
+
+        {
+            var customerEmailError = document.getElementById('customerEmailError');
+            customerEmailError.className = customerEmailError.className + " hidden";
+        }
+
+
+    }
+
+    function customerBirthdayTextBox_onChange ()
+    {
+        var customerBirthday = document.getElementById('customerBirthday').value;
+
+        if (customerBirthday.length > 3)
+
+        {
+            var customerBirthdayError = document.getElementById('customerBirthdayError');
+            customerBirthdayError.className = customerBirthdayError.className + " hidden";
+        }
+
+
+    }
+
+    function customerNumberTextBox_onChange ()
+    {
+        var customerNumber = document.getElementById('customerNumber').value;
+
+        if (customerNumber.length > 3)
+
+        {
+            var customerNumberError = document.getElementById('customerNumberError');
+            customerNumberError.className = customerNumberError.className + " hidden";
+        }
+
+
+    }
+
+    function customerAddressTextBox_onChange ()
+    {
+        var customerAddress = document.getElementById('customerAddress').value;
+
+        if (customerAddress.length > 3)
+
+        {
+            var customerAddressError = document.getElementById('customerAddressError');
+            customerAddressError.className = customerAddressError.className + " hidden";
+        }
+
+
+    }
+
+    function btnGetTopCustomers_onclick()
+    {
+        var Customer = Parse.Object.extend("Customer");
+        var customerData;
+
+        var query = new Parse.Query(Customer);
+        query.find({
+            success:function(results) {
+                console.log("Total: " + results.length + "\nresults: \n" + JSON.stringify(results));
+                customerData = JSON.stringify(results);
+            },
+            error:function(error) {
+                    alert("Error when getting objects!");
+                }
+            });
+
+        //query.find({}, {});
+
+        var table = document.getElementById('tblCustomers');
+
+        var rowCount = table.rows.length;
+        var row = table.insertRow(rowCount);
+        //possible make this random elements inside table rows. google this with the onlick feature. 
+
+        var cell1 = row.insertCell(0);
+        var element1 = document.createElement("input");
+        element1.type = "text";
+        element1.placeholder = "newRow";
+        cell1.appendChild(element1);
+
+        var cell2 = row.insertCell(1);
+        var element2 = document.createElement("input");
+        element2.type = "radio";
+        cell2.appendChild(element2);
+    }
+
+    function createCustomerLogin()
+    {
+        var createCustomerUserName = document.getElementById('createCustomerUserName').value;
+        var createCustomerPassword = document.getElementById('createCustomerPassword').value;
+
+
+        if (createCustomerUserName == "") {
+            var customerUserNameError = document.getElementById('createCustomerUserNameError');
+            createCustomerUserNameError.className = createCustomerUserNameError.className.replace(" hidden", "");
+            return;
+        }
+
+        if (createCustomerPassword == "") {
+            var customerPasswordError = document.getElementById('createCustomerPasswordError');
+            createCustomerPasswordError.className = createCustomerPasswordError.className.replace(" hidden", "");
+            return;
+        }
+    }
+
+
+
+
+    function customerLogin()
+
+    {
+        var customerUserName = document.getElementById('customerUserName').value;
+        var customerPassword = document.getElementById('customerPassword').value;
+
+        if (customerUserName == "" )
+        {
+            var customerUserNameError = document.getElementById('customerUserNameError');
+            customerUserNameError.className = customerUserNameError.className.replace(" hidden", "");
+            return;
+        }
+
+        if (customerPassword == "" )
+        {
+            var customerPasswordError = document.getElementById('customerPasswordError');
+            customerPasswordError.className = customerPasswordError.className.replace(" hidden", "");
+            return;
+        }
+
+        var Login = Parse.Object.extend("Login");
+        var query = new Parse.Query(Login);
+        query.get("", {
+            success: function(customerLogin) {
+                // The object was retrieved successfully.
+                alert("Login Successful \n Welcome " + customerUserName);
+            },
+            error: function(object, error) {
+                // The object was not retrieved successfully.
+                // error is a Parse.Error with an error code and message.
+                alert("Login Failed \n Please Re-Enter Login Information ");
+            }
+        });
+
+    }
+
+    function customerUserNameTextBox_onChange()
+    {
+        var customerUserName = document.getElementById('customerUserName').value;
+
+        if (customerUserName.length > 3)
+
+        {
+            var customerUserNameError = document.getElementById('customerUserNameError');
+            customerUserNameError.className = customerUserNameError.className + " hidden";
+        }
+
+
+    }
+
+    function customerPasswordTextBox_onChange()
+    {
+        var customerPassword = document.getElementById('customerPassword').value;
+
+        if (customerPassword.length > 3)
+
+        {
+            var customerPasswordError = document.getElementById('customerPasswordError');
+            customerPasswordError.className = customerPasswordError.className + " hidden";
+        }
+
+
+    }
+
+</script>
+
 
 	<!-- Preloader -->
 	<div id="loader">
@@ -79,6 +336,7 @@
                     <li><a class="page-scroll" href="#inventory">Inventory</a></li>
                     <li><a class="page-scroll" href="#customer">Customer</a></li>
                     <li><a class="page-scroll" href="#aboutus">About Us</a></li>
+                    <li><a href="#loginModal" data-toggle="modal" data-target="#loginModal">Login</a></li>
                 </ul>
             </div>
             <!-- navbar-collapse End -->
@@ -145,6 +403,107 @@
                 <div class="col-lg-12 text-center wow fadeInDown animated">
                     <h2 class="section-heading">Customer</h2>
                     <h3 class="section-subheading text-muted">Lorem ipsum dolor sit amet consectetur.</h3>
+
+                    <div role="tabpanel">
+
+                        <!-- Nav tabs -->
+                        <ul class="nav nav-tabs" role="tablist">
+                            <li role="presentation" class="active"><a href="#registration" aria-controls="registration" role="tab" data-toggle="tab">Registration</a></li>
+                            <li role="presentation"><a href="#customerList" aria-controls=customerList" role="tab" data-toggle="tab">Active Customer</a></li>
+                        </ul>
+
+                        <!-- Tab panes -->
+                        <div class="tab-content">
+                            <div role="tabpanel" class="tab-pane active" id="registration">
+
+                                            <div class="">
+
+                                                <label for="customerFirstName">Enter First Name</label>
+                                                <input type="text" class="" id="customerFirstName" onchange="customerFirstNameTextBox_onChange ()" placeholder="Enter First Name" />
+                                                <div id="customerFirstNameError" class="text-danger hidden"> Please Enter Your First Name </div>
+                                            </div>
+                                            <div class="">
+                                                <label for="customerLastName">Enter Last Name</label>
+                                                <input type="text" class="" id="customerLastName" onchange="customerLastNameTextBox_onChange ()" placeholder="Enter Last Name" />
+                                                <div id="customerLastNameError" class="text-danger hidden"> Please Enter Your Last Name </div>
+                                            </div>
+                                            <div class="">
+                                                <label for="customerEmail">Email Address</label>
+                                                <input type="text" class="" id="customerEmail" onchange="customerEmailTextBox_onChange()" placeholder="Enter Email" />
+                                                <div id="customerEmailError" class="text-danger hidden"> Please Enter Your Email </div>
+                                            </div>
+                                            <div class="">
+                                                <label for="customerBirthday">Date Of Birth</label>
+                                                <input type="text" class="" id="customerBirthday" onchange="customerBirthdayTextBox_onChange()" placeholder="Enter DD/MM/YYYY"/>
+                                                <div id="customerBirthdayError" class="text-danger hidden"> Please Enter Your Birthday </div>
+                                            </div>
+                                            <div class="">
+                                                <label for="customerNumber">Phone Number</label>
+                                                <input type="text" class="" id="customerNumber" onchange="customerNumberTextBox_onChange ()" placeholder="Enter Phone Number"/>
+                                                <div id="customerNumberError" class="text-danger hidden"> Please Enter Your Phone Number </div>
+                                            </div>
+                                            <div class="">
+                                                <label for="customerAddress">Address</label>
+                                                <input type="text" class="" id="customerAddress" onchange="customerAddressTextBox_onChange()" placeholder="Enter Address"/>
+                                                <div id="customerAddressError" class="text-danger hidden"> Please Enter Your Address </div>
+                                            </div>
+
+                                <button onclick="createCustomer()" class="btn btn-default">Register</button>
+
+                            </div>
+                            <div role="tabpanel" class="tab-pane" id="customerList">
+
+                                <!-- Tab panes
+                                <button id="btnGetTopCustomers" onclick="btnGetTopCustomers_onclick()" ></button> -->
+
+                                <div class="table-responsive">
+                                <table id="tblCustomers" class="table table-bordered table-hover">
+                                    <caption>Latest Customers</caption>
+                                    <thead>
+                                    <tr>
+                                        <th>First Name</th>
+                                        <th>Last Name</th>
+                                        <th>Email</th>
+                                        <th>Birthday</th>
+                                        <th>Number</th>
+                                        <th>Address</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr>
+                                        <td>Mark</td>
+                                        <td>Otto</td>
+                                        <td>mark.otto@gmail.com</td>
+                                        <td>06/13/1987</td>
+                                        <td>(469) 456-9876</td>
+                                        <td>1234 Kentucky Dr. Dallas, TX 75180</td>
+
+                                    </tr>
+                                    <tr>
+                                        <td>Mark</td>
+                                        <td>Otto</td>
+                                        <td>mark.otto@gmail.com</td>
+                                        <td>06/13/1987</td>
+                                        <td>(469) 456-9876</td>
+                                        <td>1234 Kentucky Dr. Dallas, TX 75180</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Mark</td>
+                                        <td>Otto</td>
+                                        <td>mark.otto@gmail.com</td>
+                                        <td>06/13/1987</td>
+                                        <td>(469) 456-9876</td>
+                                        <td>1234 Kentucky Dr. Dallas, TX 75180</td>
+                                    </tr>
+                                    </tbody>
+
+                                </table>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
                 </div>
             </div>
         </div>
@@ -179,6 +538,64 @@
     <!-- Footer End -->
 
 
+<!-- Login Modal Start -->
+<div class="modal fade" id="loginModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title">Log-in</h4>
+            </div>
+            <div role="tabpanel">
+
+                <!-- Nav tabs -->
+                <ul class="nav nav-tabs" role="tablist">
+                    <li role="presentation" class="active"><a href="#loginPage" aria-controls="login" role="tab" data-toggle="tab">Login</a></li>
+
+                </ul>
+
+                <!-- Tab panes -->
+                <div class="tab-content">
+                    <div role="tabpanel" class="tab-pane active" id="loginPage">
+                        <div class="">
+                            <label for="customerUserName">User Name</label>
+                            <input type="text" class="" id="customerUserName" onchange="customerUserNameTextBox_onChange()" placeholder="Enter User Name" />
+                            <div id="customerUserNameError" class="text-danger hidden"> Please Enter Your User Name </div>
+                        </div>
+                        <div class="">
+                            <label for="customerPassword">Password</label>
+                            <input type="text" class="" id="customerPassword" onchange="customerPasswordTextBox_onChange()" placeholder="Enter Password"/>
+                            <div id="customerPasswordError" class="text-danger hidden"> Please Enter Your Password </div>
+                        </div>
+                        <button onclick="customerLogin()" class="btn btn-default">Login</button>
+                    </div>
+                </div>
+
+                <div class="tab-content">
+                    <div role="tabpanel" class="tab-pane" id=registerLogin>
+
+                        <div class="">
+                            <label for="createCustomerUserName">Create User Name</label>
+                            <input type="text" class="" id="createCustomerUserName" onchange="createCustomerUserNameTextBox_onChange()" placeholder="Enter User Name" />
+                            <div id="createCustomerUserNameError" class="text-danger hidden"> Please Enter Your User Name </div>
+                        </div>
+                        <div class="">
+                            <label for="createCustomerPassword">Password</label>
+                            <input type="text" class="" id="createCustomerPassword" onchange="createCustomerPasswordTextBox_onChange()" placeholder="Enter Password"/>
+                            <div id="createCustomerPasswordError" class="text-danger hidden"> Please Enter Your Password </div>
+                        </div>
+
+                        <button onclick="createCustomerLogin()" class="btn btn-default">Login</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Login Modal End -->
+
     <!-- jQuery Version 1.11.1 -->
     <script src="js/jquery-1.11.1.js"></script>
 
@@ -199,7 +616,7 @@
 
     <!-- Contact Form JavaScript -->
     <script src="js/jqBootstrapValidation.js"></script>
-    <script src="js/contact_me.js"></script>
+
 
     <!-- Custom Theme JavaScript -->
     <script src="js/custom.js"></script>
