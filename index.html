@@ -96,7 +96,7 @@
         });
     }
 
-    function customerNameTextBox_onChange ()
+    function customerFirstNameTextBox_onChange ()
     {
         var customerFirstName = document.getElementById('customerFirstName').value;
 
@@ -213,6 +213,92 @@
         cell2.appendChild(element2);
     }
 
+    function createCustomerLogin()
+    {
+        var createCustomerUserName = document.getElementById('createCustomerUserName').value;
+        var createCustomerPassword = document.getElementById('createCustomerPassword').value;
+
+
+        if (createCustomerUserName == "") {
+            var customerUserNameError = document.getElementById('createCustomerUserNameError');
+            createCustomerUserNameError.className = createCustomerUserNameError.className.replace(" hidden", "");
+            return;
+        }
+
+        if (createCustomerPassword == "") {
+            var customerPasswordError = document.getElementById('createCustomerPasswordError');
+            createCustomerPasswordError.className = createCustomerPasswordError.className.replace(" hidden", "");
+            return;
+        }
+    }
+
+
+
+
+    function customerLogin()
+
+    {
+        var customerUserName = document.getElementById('customerUserName').value;
+        var customerPassword = document.getElementById('customerPassword').value;
+
+        if (customerUserName == "" )
+        {
+            var customerUserNameError = document.getElementById('customerUserNameError');
+            customerUserNameError.className = customerUserNameError.className.replace(" hidden", "");
+            return;
+        }
+
+        if (customerPassword == "" )
+        {
+            var customerPasswordError = document.getElementById('customerPasswordError');
+            customerPasswordError.className = customerPasswordError.className.replace(" hidden", "");
+            return;
+        }
+
+        var Login = Parse.Object.extend("Login");
+        var query = new Parse.Query(Login);
+        query.get("", {
+            success: function(customerLogin) {
+                // The object was retrieved successfully.
+                alert("Login Successful \n Welcome " + customerUserName);
+            },
+            error: function(object, error) {
+                // The object was not retrieved successfully.
+                // error is a Parse.Error with an error code and message.
+                alert("Login Failed \n Please Re-Enter Login Information ");
+            }
+        });
+
+    }
+
+    function customerUserNameTextBox_onChange()
+    {
+        var customerUserName = document.getElementById('customerUserName').value;
+
+        if (customerUserName.length > 3)
+
+        {
+            var customerUserNameError = document.getElementById('customerUserNameError');
+            customerUserNameError.className = customerUserNameError.className + " hidden";
+        }
+
+
+    }
+
+    function customerPasswordTextBox_onChange()
+    {
+        var customerPassword = document.getElementById('customerPassword').value;
+
+        if (customerPassword.length > 3)
+
+        {
+            var customerPasswordError = document.getElementById('customerPasswordError');
+            customerPasswordError.className = customerPasswordError.className + " hidden";
+        }
+
+
+    }
+
 </script>
 
 
@@ -250,6 +336,7 @@
                     <li><a class="page-scroll" href="#inventory">Inventory</a></li>
                     <li><a class="page-scroll" href="#customer">Customer</a></li>
                     <li><a class="page-scroll" href="#aboutus">About Us</a></li>
+                    <li><a href="#loginModal" data-toggle="modal" data-target="#loginModal">Login</a></li>
                 </ul>
             </div>
             <!-- navbar-collapse End -->
@@ -332,7 +419,7 @@
                                             <div class="">
 
                                                 <label for="customerFirstName">Enter First Name</label>
-                                                <input type="text" class="" id="customerFirstName" onchange="customerNameTextBox_onChange ()" placeholder="Enter First Name" />
+                                                <input type="text" class="" id="customerFirstName" onchange="customerFirstNameTextBox_onChange ()" placeholder="Enter First Name" />
                                                 <div id="customerFirstNameError" class="text-danger hidden"> Please Enter Your First Name </div>
                                             </div>
                                             <div class="">
@@ -366,44 +453,52 @@
                             </div>
                             <div role="tabpanel" class="tab-pane" id="customerList">
 
-                                <button id="btnGetTopCustomers" onclick="btnGetTopCustomers_onclick()" ></button>
-                                <table id="tblCustomers" class="table">
-                                    <caption>Optional table caption.</caption>
+                                <!-- Tab panes
+                                <button id="btnGetTopCustomers" onclick="btnGetTopCustomers_onclick()" ></button> -->
+
+                                <div class="table-responsive">
+                                <table id="tblCustomers" class="table table-bordered table-hover">
+                                    <caption>Latest Customers</caption>
                                     <thead>
                                     <tr>
-                                        <th>#</th>
                                         <th>First Name</th>
                                         <th>Last Name</th>
-                                        <th>Username</th>
+                                        <th>Email</th>
+                                        <th>Birthday</th>
+                                        <th>Number</th>
+                                        <th>Address</th>
                                     </tr>
                                     </thead>
                                     <tbody>
                                     <tr>
-                                        <th>1</th>
                                         <td>Mark</td>
                                         <td>Otto</td>
-                                        <td>@mdo</td>
+                                        <td>mark.otto@gmail.com</td>
+                                        <td>06/13/1987</td>
+                                        <td>(469) 456-9876</td>
+                                        <td>1234 Kentucky Dr. Dallas, TX 75180</td>
+
                                     </tr>
                                     <tr>
-                                        <th>2</th>
-                                        <td>Jacob</td>
-                                        <td>Thornton</td>
-                                        <td>@fat</td>
+                                        <td>Mark</td>
+                                        <td>Otto</td>
+                                        <td>mark.otto@gmail.com</td>
+                                        <td>06/13/1987</td>
+                                        <td>(469) 456-9876</td>
+                                        <td>1234 Kentucky Dr. Dallas, TX 75180</td>
                                     </tr>
                                     <tr>
-                                        <th>3</th>
-                                        <td>Larry</td>
-                                        <td>the Bird</td>
-                                        <td>@twitter</td>
+                                        <td>Mark</td>
+                                        <td>Otto</td>
+                                        <td>mark.otto@gmail.com</td>
+                                        <td>06/13/1987</td>
+                                        <td>(469) 456-9876</td>
+                                        <td>1234 Kentucky Dr. Dallas, TX 75180</td>
                                     </tr>
                                     </tbody>
 
                                 </table>
-
-
-
-
-
+                                </div>
                             </div>
                         </div>
 
@@ -442,6 +537,64 @@
     </footer>
     <!-- Footer End -->
 
+
+<!-- Login Modal Start -->
+<div class="modal fade" id="loginModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title">Log-in</h4>
+            </div>
+            <div role="tabpanel">
+
+                <!-- Nav tabs -->
+                <ul class="nav nav-tabs" role="tablist">
+                    <li role="presentation" class="active"><a href="#loginPage" aria-controls="login" role="tab" data-toggle="tab">Login</a></li>
+
+                </ul>
+
+                <!-- Tab panes -->
+                <div class="tab-content">
+                    <div role="tabpanel" class="tab-pane active" id="loginPage">
+                        <div class="">
+                            <label for="customerUserName">User Name</label>
+                            <input type="text" class="" id="customerUserName" onchange="customerUserNameTextBox_onChange()" placeholder="Enter User Name" />
+                            <div id="customerUserNameError" class="text-danger hidden"> Please Enter Your User Name </div>
+                        </div>
+                        <div class="">
+                            <label for="customerPassword">Password</label>
+                            <input type="text" class="" id="customerPassword" onchange="customerPasswordTextBox_onChange()" placeholder="Enter Password"/>
+                            <div id="customerPasswordError" class="text-danger hidden"> Please Enter Your Password </div>
+                        </div>
+                        <button onclick="customerLogin()" class="btn btn-default">Login</button>
+                    </div>
+                </div>
+
+                <div class="tab-content">
+                    <div role="tabpanel" class="tab-pane" id=registerLogin>
+
+                        <div class="">
+                            <label for="createCustomerUserName">Create User Name</label>
+                            <input type="text" class="" id="createCustomerUserName" onchange="createCustomerUserNameTextBox_onChange()" placeholder="Enter User Name" />
+                            <div id="createCustomerUserNameError" class="text-danger hidden"> Please Enter Your User Name </div>
+                        </div>
+                        <div class="">
+                            <label for="createCustomerPassword">Password</label>
+                            <input type="text" class="" id="createCustomerPassword" onchange="createCustomerPasswordTextBox_onChange()" placeholder="Enter Password"/>
+                            <div id="createCustomerPasswordError" class="text-danger hidden"> Please Enter Your Password </div>
+                        </div>
+
+                        <button onclick="createCustomerLogin()" class="btn btn-default">Login</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Login Modal End -->
 
     <!-- jQuery Version 1.11.1 -->
     <script src="js/jquery-1.11.1.js"></script>
